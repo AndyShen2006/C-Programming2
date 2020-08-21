@@ -23,29 +23,47 @@ int main()
 	}
 	cout << ans;
 	*/
-	freopen("KMP.in","r",stdin);
+	freopen("KMP3.in","r",stdin);
 	//freopen("KMP.out","rw",stdout);
-	//string text,pattern;
-	int lps[1000];
-	string pattern;
-	//cin >> text >> pattern;
-	cin >> pattern;
+	string text,pattern;
+	int lps[1000] = {0};
+	cin >> text >> pattern;
+	//cin >> pattern;
 	int n=text.size(),m=pattern.size();
-	int s=0,j=0,ans=0;
+	int s=0,j=0,ans=0;  //s->text,j->pattern
 	//KMP Prepare
-	
+	int k=0,q=1;  //q->suffix
+	while(q<m) {
+		if(pattern[q] == pattern[k]) {
+			k++;
+			lps[q] = k;
+			q++;
+		}else {
+			if(k==0) {
+				lps[q] = 0;
+				q++;
+			}else{
+				k=lps[k-1];
+			}
+		}
+	}
 	//Main
-	while(s<n-m) {
-		cout << s << " " << j << endl;
+	for(int i=0; i<m; i++) {
+		cout << i << ' ' << lps[i] << endl;
+	}
+	while(s<n-m) {		
 		if(text[s] == pattern[j]) {
 			s++;
 			j++;
 		}else{
-			s-=j-1;
-			j=0;
+			if(j==0) {
+				s++;
+			}else {
+				j=lps[j-1];
+			}
 		}
-		if(j==pattern.size()-1) {
-			s-=j-1;
+		if(j==m-1) {
+			s++;
 			j=0;
 			ans++;
 		}
