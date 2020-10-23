@@ -23,7 +23,7 @@ int main()
 	}
 	cout << ans;
 	*/
-	freopen("KMP3.in","r",stdin);
+	//freopen("KMP3.in","r",stdin);
 	//freopen("KMP.out","rw",stdout);
 	string text,pattern;
 	int lps[1000] = {0};
